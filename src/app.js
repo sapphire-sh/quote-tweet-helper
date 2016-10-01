@@ -38,7 +38,7 @@ app.post('/i', (req, res) => {
 	let id = req.body.url.split('/').pop();
 	res.redirect(`/i/${encrypt(`${new Date().getTime()}-${id}`)}`);
 });
-	
+
 app.get('/i/:id', (req, res) => {
 	try {
 		let id = decrypt(req.params.id).split('-').pop();
@@ -48,7 +48,7 @@ app.get('/i/:id', (req, res) => {
 			}
 			else {
 				let $ = cheerio.load(html);
-				
+
 				let title = $('meta[property="og:title"]').attr('content');
 				if(title) {
 					title = title.split(' ');
@@ -63,7 +63,7 @@ app.get('/i/:id', (req, res) => {
 					image.pop();
 					image = `${image.join('_')}.${extension}`;
 					image = querystring.escape(image);
-					
+
 					res.render('card', {
 						id: id,
 						title: title,
