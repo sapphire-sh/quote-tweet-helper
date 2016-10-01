@@ -7,6 +7,7 @@
 		<meta name="twitter:title" content="<%=title %>" />
 		<meta name="twitter:description" content="<%=description %>" />
 		<meta name="twitter:image" content="<%=image %>" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js"></script>
 	</head>
 	<body>
 		<% include ./_header %>
@@ -18,7 +19,7 @@
 					URL
 				</div>
 				<input type="text" id="url_input" readonly value="https://quote.sapphire.sh/i/<%=id %>">
-				<button class="ui right button" data-clipboard-target="#url_input">
+				<button class="ui right button copy" data-clipboard-target="#url_input">
 					Copy
 				</button>
 			</div>
@@ -33,6 +34,7 @@
 				</div>
 			</div>
 		</div>
+		<script>$(document).ready(function(){new Clipboard('.copy')})</script>
 		<% include ./_footer %>
 	</body>
 </html>
