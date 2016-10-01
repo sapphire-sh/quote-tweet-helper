@@ -22,14 +22,14 @@
   "homepage": "https://github.com/sapphiredev/quote-tweet-helper#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "cheerio": "^0.22.0",
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",
     "ejs": "^2.5.2",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
     "morgan": "^1.7.0",
-    "oauth": "^0.9.14",
     "pm2": "^2.0.18",
-    "twit": "^2.2.5"
+    "request": "^2.75.0"
   }
 }
