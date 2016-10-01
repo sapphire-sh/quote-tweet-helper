@@ -38,45 +38,57 @@ app.post('/i', (req, res) => {
 	let id = req.body.url.split('/').pop();
 	res.redirect(`/i/${encrypt(`${new Date().getTime()}-${id}`)}`);
 });
-	
+
 app.get('/i/:id', (req, res) => {
-	let id = decrypt(req.params.id).split('-').pop();
-	request(`https:\/\/twitter.com/quote_helper\/status\/${id}`, (err, response, html) => {
-		if(err) {
-			res.json(err);
-		}
-		else {
-			let $ = cheerio.load(html);
-			
-			let title = $('meta[property="og:title"]').attr('content');
-			if(title) {
-				title = title.split(' ');
-				title.pop();
-				title.pop();
-				title = title.join(' ');
-				let description = $('meta[property="og:description"]').attr('content');
-				let image = $('.js-initial-focus .js-action-profile-avatar').attr('src');
-				image = image.split('.');
-				let extension = image.pop();
-				image = image.join('.').split('_');
-				image.pop();
-				image = `${image.join('_')}.${extension}`;
-				image = querystring.escape(image);
-				
-				res.render('card', {
-					id: id,
-					title: title,
-					description: description,
-					image: `https://quote.sapphire.sh/image/${image}`
-				});
+	try {
+		let id = decrypt(req.params.id).split('-').pop();
+		const twitterUrl = `https://twitter.com/quote_helper/status/${id}`;
+		request(twitterUrl, (err, response, html) => {
+			if (err) {
+				res.json(err);
+			} else {
+				let $ = cheerio.load(html);
+
+				let title = $('meta[property="og:title"]').attr('content');
+				if (title) {
+					title = title.split(' ');
+					title.pop();
+					title.pop();
+					title = title.join(' ');
+					let description = $('meta[property="og:description"]')
+						.attr('content');
+					let image = $('.js-initial-focus .js-action-profile-avatar')
+						.attr('src');
+					image = image.split('.');
+					let extension = image.pop();
+					image = image.join('.').split('_');
+					image.pop();
+					image = `${image.join('_')}.${extension}`;
+					image = querystring.escape(image);
+
+					res.render('card', {
+						id: id,
+						title: title,
+						description: description,
+						image: `https://quote.sapphire.sh/image/${image}`
+					});
+				} else {
+					res.redirect('/');
+				}
 			}
-			else {
-				res.redirect('/');
-			}
-		}
-	});
+		});
+	} catch (e) {
+		res.status(400);
+		res.end();
+		console.log(typeof e);
+	}
 });
 
+/**
+ * encrypt text for using as id
+ * @param {string} text nounce attached text
+ * @return {string} encrypted data in hexadecimal form.
+ */
 function encrypt(text) {
 	let cipher = crypto.createCipher(algorithm, password);
 	let enc = cipher.update(text, 'utf8', 'hex');
@@ -84,15 +96,20 @@ function encrypt(text) {
 	return enc;
 }
 
+/**
+ * decrypt id.
+ * @param {string} text encrypted data in hexadecimal form
+ * @return {string} decrypted value
+ */
 function decrypt(text) {
 	let decipher = crypto.createDecipher(algorithm, password);
-	let dec = decipher.update(text, 'hex', 'utf8')
+	let dec = decipher.update(text, 'hex', 'utf8');
 	dec += decipher.final('utf8');
 	return dec;
 }
 
 app.get('/image/:url', (req, res) => {
-console.log(querystring.unescape(req.params.url));
+	console.log(querystring.unescape(req.params.url));
 	request.get(querystring.unescape(req.params.url)).pipe(res);
 });
 
