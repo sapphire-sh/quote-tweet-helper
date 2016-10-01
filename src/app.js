@@ -29,7 +29,8 @@ app.use(session({
 app.use(compression());
 
 app.set('view engine', 'ejs');
-app.use('/static', express.static('../public'));
+console.log(__dirname);
+app.use('/static', express.static('static'));
 
 app.get('/', (req, res) => {
 	console.log(req.session.oauth);
