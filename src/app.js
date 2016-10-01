@@ -40,41 +40,47 @@ app.post('/i', (req, res) => {
 });
 	
 app.get('/i/:id', (req, res) => {
-	let id = decrypt(req.params.id).split('-').pop();
-	request(`https:\/\/twitter.com/quote_helper\/status\/${id}`, (err, response, html) => {
-		if(err) {
-			res.json(err);
-		}
-		else {
-			let $ = cheerio.load(html);
-			
-			let title = $('meta[property="og:title"]').attr('content');
-			if(title) {
-				title = title.split(' ');
-				title.pop();
-				title.pop();
-				title = title.join(' ');
-				let description = $('meta[property="og:description"]').attr('content');
-				let image = $('.js-initial-focus .js-action-profile-avatar').attr('src');
-				image = image.split('.');
-				let extension = image.pop();
-				image = image.join('.').split('_');
-				image.pop();
-				image = `${image.join('_')}.${extension}`;
-				image = querystring.escape(image);
-				
-				res.render('card', {
-					id: id,
-					title: title,
-					description: description,
-					image: `https://quote.sapphire.sh/image/${image}`
-				});
+	try {
+		let id = decrypt(req.params.id).split('-').pop();
+		request(`https:\/\/twitter.com/quote_helper\/status\/${id}`, (err, response, html) => {
+			if(err) {
+				res.json(err);
 			}
 			else {
-				res.redirect('/');
+				let $ = cheerio.load(html);
+				
+				let title = $('meta[property="og:title"]').attr('content');
+				if(title) {
+					title = title.split(' ');
+					title.pop();
+					title.pop();
+					title = title.join(' ');
+					let description = $('meta[property="og:description"]').attr('content');
+					let image = $('.js-initial-focus .js-action-profile-avatar').attr('src');
+					image = image.split('.');
+					let extension = image.pop();
+					image = image.join('.').split('_');
+					image.pop();
+					image = `${image.join('_')}.${extension}`;
+					image = querystring.escape(image);
+					
+					res.render('card', {
+						id: id,
+						title: title,
+						description: description,
+						image: `https://quote.sapphire.sh/image/${image}`
+					});
+				}
+				else {
+					res.redirect('/');
+				}
 			}
-		}
-	});
+		});
+	} catch(e) {
+		res.status(400);
+		res.end();
+		console.log(typeof e);
+	}
 });
 
 function encrypt(text) {
