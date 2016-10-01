@@ -18,7 +18,7 @@
 				<div class="ui label">
 					URL
 				</div>
-				<input type="text" id="url_input" readonly value="https://quote.sapphire.sh/i/<%=id %>">
+				<input type="text" id="url_input" readonly value="">
 				<button class="ui right button copy" data-clipboard-target="#url_input">
 					Copy
 				</button>
@@ -34,7 +34,12 @@
 				</div>
 			</div>
 		</div>
-		<script>$(document).ready(function(){new Clipboard('.copy')})</script>
+		<script>
+			$(document).ready(function() {
+				$('input').val(window.location.href);
+				new Clipboard('.copy');
+			});
+		</script>
 		<% include ./_footer %>
 	</body>
 </html>
