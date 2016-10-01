@@ -13,6 +13,15 @@
 		<div class="ui main container">
 			<blockquote class="twitter-tweet" data-lang="en"><a href="https://twitter.com/quote_helper/status/<%=id %>"></a></blockquote>
 			<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+			<div class="ui action labeled fluid input">
+				<div class="ui label">
+					URL
+				</div>
+				<input type="text" id="url_input" readonly value="https://quote.sapphire.sh/i/<%=id %>">
+				<button class="ui right button" data-clipboard-target="#url_input">
+					Copy
+				</button>
+			</div>
 			<div class="ui center aligned container" style="margin-top: 40px;">
 				<div class="ui stackable grid">
 					<div class="sixteen wide column">
