@@ -13,6 +13,7 @@ let app = express();
 
 let request = require('request');
 let cheerio = require('cheerio');
+let querystring = require('querystring');
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
@@ -51,26 +52,37 @@ app.get('/i/:id', (req, res) => {
 			let $ = cheerio.load(html);
 			
 			let title = $('meta[property="og:title"]').attr('content');
-			title = title.split(' ');
-			title.pop();
-			title.pop();
-			title = title.join(' ');
-			let description = $('meta[property="og:description"]').attr('content');
-			let image = $('.js-action-profile-avatar').attr('src');
-			image = image.split('.');
-			let extension = image.pop();
-			image = image.join('.').split('_');
-			image.pop();
-			image = `${image.join('_')}.${extension}`;
-			
-			res.render('card', {
-				id: req.params.id,
-				title: title,
-				description: description,
-				image: image
-			});
+			if(title) {
+				title = title.split(' ');
+				title.pop();
+				title.pop();
+				title = title.join(' ');
+				let description = $('meta[property="og:description"]').attr('content');
+				let image = $('.js-action-profile-avatar').attr('src');
+				image = image.split('.');
+				let extension = image.pop();
+				image = image.join('.').split('_');
+				image.pop();
+				image = `${image.join('_')}.${extension}`;
+				image = querystring.escape(image);
+				
+				res.render('card', {
+					id: req.params.id,
+					title: title,
+					description: description,
+					image: `https://quote.sapphire.sh/image/${image}`
+				});
+			}
+			else {
+				res.redirect('/');
+			}
 		}
 	});
+});
+
+app.get('/image/:url', (req, res) => {
+console.log(querystring.unescape(req.params.url));
+	request.get(querystring.unescape(req.params.url)).pipe(res);
 });
 
 app.listen(8022);
