@@ -1,0 +1,35 @@
+{
+  "name": "quote-tweet-helper",
+  "version": "1.0.0",
+  "description": "https://quote.sapphire.sh",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "pm2 start ./app.json",
+    "stop": "pm2 stop ./app.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sapphiredev/quote-tweet-helper.git"
+  },
+  "keywords": [
+    "twitter"
+  ],
+  "author": "sapphire",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sapphiredev/quote-tweet-helper/issues"
+  },
+  "homepage": "https://github.com/sapphiredev/quote-tweet-helper#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.2",
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "morgan": "^1.7.0",
+    "oauth": "^0.9.14",
+    "pm2": "^2.0.18",
+    "twit": "^2.2.5"
+  }
+}

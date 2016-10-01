@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>quote-tweet-helper</title>
+	</head>
+	<body>
+		<div>
+			<% if(oauth) { %>
+			<a href="/signout">sign out</a>
+			<% } else { %>
+			<a href="/authenticate">sign in</a>
+			<% } %>
+		</div>
+	</body>
+</html>
+
