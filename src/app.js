@@ -81,6 +81,11 @@ app.get('/i/:id', (req, res) => {
 	}
 });
 
+/**
+ * encrypt text for using as id
+ * @param {string} text nounce attached text
+ * @return {string} encrypted data in hexadecimal form.
+ */
 function encrypt(text) {
 	let cipher = crypto.createCipher(algorithm, password);
 	let enc = cipher.update(text, 'utf8', 'hex');
@@ -88,6 +93,11 @@ function encrypt(text) {
 	return enc;
 }
 
+/**
+ * decrypt id.
+ * @param {string} text encrypted data in hexadecimal form
+ * @return {string} decrypted value
+ */
 function decrypt(text) {
 	let decipher = crypto.createDecipher(algorithm, password);
 	let dec = decipher.update(text, 'hex', 'utf8');
