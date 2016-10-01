@@ -55,7 +55,7 @@ app.get('/i/:id', (req, res) => {
 				title.pop();
 				title = title.join(' ');
 				let description = $('meta[property="og:description"]').attr('content');
-				let image = $('.js-action-profile-avatar').attr('src');
+				let image = $('.js-initial-focus .js-action-profile-avatar').attr('src');
 				image = image.split('.');
 				let extension = image.pop();
 				image = image.join('.').split('_');
