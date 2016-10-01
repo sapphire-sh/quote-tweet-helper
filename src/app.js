@@ -42,7 +42,8 @@ app.post('/i', (req, res) => {
 app.get('/i/:id', (req, res) => {
 	try {
 		let id = decrypt(req.params.id).split('-').pop();
-		request(`https:\/\/twitter.com/quote_helper\/status\/${id}`, (err, response, html) => {
+		const twitterUrl = `https://twitter.com/quote_helper/status/${id}`;
+		request(twitterUrl, (err, response, html) => {
 			if (err) {
 				res.json(err);
 			} else {
@@ -54,8 +55,10 @@ app.get('/i/:id', (req, res) => {
 					title.pop();
 					title.pop();
 					title = title.join(' ');
-					let description = $('meta[property="og:description"]').attr('content');
-					let image = $('.js-initial-focus .js-action-profile-avatar').attr('src');
+					let description = $('meta[property="og:description"]')
+						.attr('content');
+					let image = $('.js-initial-focus .js-action-profile-avatar')
+						.attr('src');
 					image = image.split('.');
 					let extension = image.pop();
 					image = image.join('.').split('_');
