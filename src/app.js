@@ -43,14 +43,13 @@ app.get('/i/:id', (req, res) => {
 	try {
 		let id = decrypt(req.params.id).split('-').pop();
 		request(`https:\/\/twitter.com/quote_helper\/status\/${id}`, (err, response, html) => {
-			if(err) {
+			if (err) {
 				res.json(err);
-			}
-			else {
+			} else {
 				let $ = cheerio.load(html);
 
 				let title = $('meta[property="og:title"]').attr('content');
-				if(title) {
+				if (title) {
 					title = title.split(' ');
 					title.pop();
 					title.pop();
@@ -70,13 +69,12 @@ app.get('/i/:id', (req, res) => {
 						description: description,
 						image: `https://quote.sapphire.sh/image/${image}`
 					});
-				}
-				else {
+				} else {
 					res.redirect('/');
 				}
 			}
 		});
-	} catch(e) {
+	} catch (e) {
 		res.status(400);
 		res.end();
 		console.log(typeof e);
@@ -92,13 +90,13 @@ function encrypt(text) {
 
 function decrypt(text) {
 	let decipher = crypto.createDecipher(algorithm, password);
-	let dec = decipher.update(text, 'hex', 'utf8')
+	let dec = decipher.update(text, 'hex', 'utf8');
 	dec += decipher.final('utf8');
 	return dec;
 }
 
 app.get('/image/:url', (req, res) => {
-console.log(querystring.unescape(req.params.url));
+	console.log(querystring.unescape(req.params.url));
 	request.get(querystring.unescape(req.params.url)).pipe(res);
 });
 
