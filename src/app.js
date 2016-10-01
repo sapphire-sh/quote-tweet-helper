@@ -1,12 +1,12 @@
 'use strict';
 
-const CONFIG = require('../config');
+let fs = require('fs');
+let path = require('path');
 
 let express = require('express');
 let morgan = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
-let session = require('express-session');
 let compression = require('compression');
 
 let app = express();
@@ -15,37 +15,33 @@ let request = require('request');
 let cheerio = require('cheerio');
 let querystring = require('querystring');
 
+let crypto = require('crypto');
+const algorithm = 'aes-256-cbc-hmac-sha256';
+const password = fs.readFileSync(path.join(__dirname, '..', 'config'));
+
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: false
 }));
 app.use(cookieParser());
-app.use(session({
-	secret: CONFIG.session.secret,
-	resave: false,
-	saveUninitialized: true
-}));
 app.use(compression());
 
 app.set('view engine', 'ejs');
-console.log(__dirname);
 app.use('/static', express.static('static'));
 
 app.get('/', (req, res) => {
-	console.log(req.session.oauth);
-	res.render('index', {
-		oauth: req.session.oauth
-	});
+	res.render('index');
 });
 
 app.post('/i', (req, res) => {
-	console.log(req.body.url);
-	res.redirect(`/i/${req.body.url.split('/').pop()}`);
+	let id = req.body.url.split('/').pop();
+	res.redirect(`/i/${encrypt(`${new Date().getTime()}-${id}`)}`);
 });
 	
 app.get('/i/:id', (req, res) => {
-	request(`https:\/\/twitter.com/quote_helper\/status\/${req.params.id}`, (err, response, html) => {
+	let id = decrypt(req.params.id).split('-').pop();
+	request(`https:\/\/twitter.com/quote_helper\/status\/${id}`, (err, response, html) => {
 		if(err) {
 			res.json(err);
 		}
@@ -68,7 +64,7 @@ app.get('/i/:id', (req, res) => {
 				image = querystring.escape(image);
 				
 				res.render('card', {
-					id: req.params.id,
+					id: id,
 					title: title,
 					description: description,
 					image: `https://quote.sapphire.sh/image/${image}`
@@ -80,6 +76,20 @@ app.get('/i/:id', (req, res) => {
 		}
 	});
 });
+
+function encrypt(text) {
+	let cipher = crypto.createCipher(algorithm, password);
+	let enc = cipher.update(text, 'utf8', 'hex');
+	enc += cipher.final('hex');
+	return enc;
+}
+
+function decrypt(text) {
+	let decipher = crypto.createDecipher(algorithm, password);
+	let dec = decipher.update(text, 'hex', 'utf8')
+	dec += decipher.final('utf8');
+	return dec;
+}
 
 app.get('/image/:url', (req, res) => {
 console.log(querystring.unescape(req.params.url));
