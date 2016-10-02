@@ -9,6 +9,7 @@ node_js:
 sudo: false
 
 script:
+  - echo "this-is-password" > config
   - npm test
 
 notifications:
