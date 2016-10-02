@@ -14,3 +14,7 @@ script:
 
 notifications:
   email: false
+
+after_success:
+  - npm run coveralls
+
