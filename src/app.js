@@ -59,7 +59,6 @@ app.get('/i/:id', (req, res) => {
 						.attr('content');
 					let image = $('meta[property="og:image"]')
 						.attr('content');
-						console.log(JSON.stringify(image));
 					let media = (image.split('/')[3] === 'media');
 					image = querystring.escape(image);
 
@@ -75,7 +74,8 @@ app.get('/i/:id', (req, res) => {
 				}
 			}
 		});
-	} catch (e) {
+	}
+	catch (e) {
 		res.status(400);
 		res.end();
 		console.log(typeof e);
@@ -128,21 +128,10 @@ function decrypt(text) {
 }
 
 app.get('/image/:url', (req, res) => {
-	console.log(querystring.unescape(req.params.url));
 	request.get(querystring.unescape(req.params.url)).pipe(res);
 });
 
-function isMochaProcess() {
-	for(var i = 0 ; i < process.argv.length ; i++) {
-		if(process.argv[i].endsWith('mocha')) {
-			return true;
-		}
-	}
-	return false;
-}
+app.listen(8022);
 
-var isTestProcess = isMochaProcess();
-if(!isTestProcess) {
-	app.listen(8022);
-}
 module.exports = app;
+
