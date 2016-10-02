@@ -28,7 +28,7 @@ describe('quote twitter helper', function() {
 		});
 		
 		it('valid card', function(done) {
-			request(app).get('/i/faf30c90b03c093c25767b1506e3c6e1aa995117e474112d2b4d8b1afe807ddb63936f84a3b91114d069b3cf382b2a95').expect(200, done);
+			request(app).get('/i/f295143c0ada369ea118ac6dcf23177ace2fa8c552e77e99d8aa3c05b2762d421585ab5879d2aafa2e273ecf1e8ee8ef').expect(200, done);
 		});
 	});
 
