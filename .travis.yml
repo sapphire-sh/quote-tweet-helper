@@ -1,0 +1,16 @@
+language: node_js
+
+node_js:
+  - "node"
+  - "6"
+  - "5"
+  - "4"
+
+sudo: false
+
+script:
+  - echo "this-is-password" > config
+  - npm test
+
+notifications:
+  email: false
