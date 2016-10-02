@@ -1,4 +1,7 @@
 # QuoteTweetHelper
+
+![](https://api.travis-ci.org/sapphiredev/quote-tweet-helper.svg)
+
 https://quote.sapphire.sh/
 
 ## Install & Execute
