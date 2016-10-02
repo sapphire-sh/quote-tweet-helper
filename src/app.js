@@ -8,6 +8,7 @@ let morgan = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
 let compression = require('compression');
+var cors = require('cors');
 
 let app = express();
 
@@ -26,6 +27,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(compression());
+app.use(cors());
 
 app.set('view engine', 'ejs');
 app.use('/static', express.static('static'));
@@ -136,4 +138,3 @@ app.get('/image/:url', (req, res) => {
 app.listen(8022);
 
 module.exports = app;
-
