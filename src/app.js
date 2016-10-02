@@ -57,20 +57,18 @@ app.get('/i/:id', (req, res) => {
 					title = title.join(' ');
 					let description = $('meta[property="og:description"]')
 						.attr('content');
-					let image = $('.js-initial-focus .js-action-profile-avatar')
-						.attr('src');
-					image = image.split('.');
-					let extension = image.pop();
-					image = image.join('.').split('_');
-					image.pop();
-					image = `${image.join('_')}.${extension}`;
+					let image = $('meta[property="og:image"]')
+						.attr('content');
+						console.log(JSON.stringify(image));
+					let media = (image.split('/')[3] === 'media');
 					image = querystring.escape(image);
 
 					res.render('card', {
 						id: id,
 						title: title,
 						description: description,
-						image: `https://quote.sapphire.sh/image/${image}`
+						image: `https://quote.sapphire.sh/image/${image}`,
+						media: media
 					});
 				} else {
 					res.redirect('/');

@@ -2,7 +2,11 @@
 <html>
 	<head>
 		<% include ./_head %>
+		<% if(media) { %>
+		<meta name="twitter:card" content="summary_large_image">
+		<% } else { %>
 		<meta name="twitter:card" content="summary" />
+		<% } %>	
 		<meta name="twitter:site" content="@quote_helper" />
 		<meta name="twitter:title" content="<%=title %>" />
 		<meta name="twitter:description" content="<%=description %>" />
@@ -25,6 +29,9 @@
 			</div>
 			<div class="ui center aligned container" style="margin-top: 40px;">
 				<div class="ui stackable grid">
+					<div class="sixteen wide column">
+						<img class="ui centered image" src="/static/instructions_1.jpg" />
+					</div>
 					<div class="sixteen wide column">
 						<img class="ui centered image" src="/static/instructions_2.jpg" />
 					</div>
