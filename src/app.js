@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 
 app.post('/i', (req, res) => {
 	let id = req.body.url.split('/').pop();
-	res.redirect(`/i/${encrypt(`${new Date().getTime()}-${id}`)}`);
+	res.redirect(createPath(id));
 });
 
 app.get('/i/:id', (req, res) => {
@@ -82,6 +82,27 @@ app.get('/i/:id', (req, res) => {
 	}
 });
 
+app.get('/api', (req, res) => {
+	var id = req.query.id;
+	var idReg = /^.\d+$/;
+	if(!idReg.test(id)) {
+		res.status(400).json({err: 'id is not number'});
+		return;
+	}
+
+	var host = req.query.host;
+	if(!host) {
+		host = "";
+	}
+
+	var url = host + createPath(id)
+	res.json({url: url});
+});
+
+function createPath(id) {
+	return `/i/${encrypt(`${new Date().getTime()}-${id}`)}`;
+}
+
 /**
  * encrypt text for using as id
  * @param {string} text nounce attached text
@@ -111,5 +132,17 @@ app.get('/image/:url', (req, res) => {
 	request.get(querystring.unescape(req.params.url)).pipe(res);
 });
 
-app.listen(8022);
+function isMochaProcess() {
+	for(var i = 0 ; i < process.argv.length ; i++) {
+		if(process.argv[i].endsWith('mocha')) {
+			return true;
+		}
+	}
+	return false;
+}
 
+var isTestProcess = isMochaProcess();
+if(!isTestProcess) {
+	app.listen(8022);
+}
+module.exports = app;
