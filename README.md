@@ -1,6 +1,6 @@
 # QuoteTweetHelper
 
-![](https://api.travis-ci.org/sapphiredev/quote-tweet-helper.svg)
+[![Build Status](https://travis-ci.org/sapphiredev/quote-tweet-helper.svg?branch=master)](https://travis-ci.org/sapphiredev/quote-tweet-helper)
 
 https://quote.sapphire.sh/
 
