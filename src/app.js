@@ -34,6 +34,10 @@ app.get('/', (req, res) => {
 	res.render('index');
 });
 
+app.get('/i', (req, res) => {
+	res.redirect('/');
+});
+
 app.post('/i', (req, res) => {
 	let id = req.body.url.split('/').pop();
 	res.redirect(createPath(id));
@@ -76,9 +80,7 @@ app.get('/i/:id', (req, res) => {
 		});
 	}
 	catch (e) {
-		res.status(400);
-		res.end();
-		console.log(typeof e);
+		res.redirect('/');
 	}
 });
 

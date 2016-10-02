@@ -17,6 +17,20 @@ describe('quote twitter helper', function() {
 	it('response to /', function(done) {
 		request(app).get('/').expect(200, done);
 	});
+	
+	context('card', function() {
+		it('empty card', function(done) {
+			request(app).get('/i').expect(302, done);
+		});
+		
+		it('invalid card', function(done) {
+			request(app).get('/i/invalid').expect(302, done);
+		});
+		
+		it('valid card', function(done) {
+			request(app).get('/i/faf30c90b03c093c25767b1506e3c6e1aa995117e474112d2b4d8b1afe807ddb63936f84a3b91114d069b3cf382b2a95').expect(200, done);
+		});
+	});
 
 	context('api', function() {
 		it('empty id', function(done) {
@@ -49,3 +63,4 @@ describe('quote twitter helper', function() {
 		});
 	});
 });
+
