@@ -1,5 +1,5 @@
 {
 	"name": "quote-tweet-helper",
-	"script": "./src/app.js"
+	"script": "./dist/app.js"
 }
 

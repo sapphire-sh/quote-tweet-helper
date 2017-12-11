@@ -2,14 +2,11 @@ language: node_js
 
 node_js:
   - "node"
-  - "6"
-  - "5"
-  - "4"
 
 sudo: false
 
 script:
-  - echo "this-is-password" > config
+  - echo "this-is-password" > config.txt
   - npm test
 
 notifications:
