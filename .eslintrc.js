@@ -105,7 +105,7 @@ module.exports = {
 		'newline-per-chained-call': [
 			'error',
 			{
-				'ignoreChainWithDepth': 1,
+				'ignoreChainWithDepth': 2,
 			},
 		],
 		'no-multiple-empty-lines': [
