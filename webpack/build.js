@@ -3,8 +3,17 @@ import Promise from 'bluebird';
 
 const webpackAsync = Promise.promisify(webpack);
 
-import clientConfig from './config.client';
+import clientDevConfig from './config.client.dev';
+import clientProdConfig from './config.client.prod';
 import serverConfig from './config.server';
+
+let clientConfig;
+if(process.env.NODE_ENV === 'prod') {
+	clientConfig = clientProdConfig;
+}
+else {
+	clientConfig = clientDevConfig;
+}
 
 function getConfigs(target) {
 	switch(target) {

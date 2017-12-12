@@ -4,7 +4,7 @@ import webpack from 'webpack';
 import WebpackDevMiddleware from 'webpack-dev-middleware';
 import WebpackHotMiddleware from 'webpack-hot-middleware';
 
-import config from '../../webpack/config.client';
+import config from '../../webpack/config.client.dev';
 
 const router = Express.Router();
 

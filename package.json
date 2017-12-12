@@ -8,7 +8,7 @@
     "build": "npm run clean && babel-node ./webpack/build.js",
     "build-client": "cross-env TARGET=client npm run build",
     "build-server": "cross-env TARGET=server npm run build",
-    "prestart": "cross-env NODE_ENV=prod npm run build-server",
+    "prestart": "cross-env NODE_ENV=prod npm run build",
     "start": "pm2 start ./app.json",
     "stop": "pm2 stop ./app.json",
     "dev": "cross-env NODE_ENV=dev npm run build-server && node ./dist/app.js",

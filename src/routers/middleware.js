@@ -1,3 +1,5 @@
+import path from 'path';
+
 import Express from 'express';
 
 import morgan from 'morgan';
@@ -11,6 +13,10 @@ import {
 } from '../utils';
 
 import card from '../utils/card';
+
+import {
+	dist,
+} from '../../webpack/config.base';
 
 const router = Express.Router();
 
@@ -26,7 +32,7 @@ router.use(cookieParser());
 router.use(compression());
 router.use(cors());
 
-router.use('/', Express.static('../dist'));
+router.use('/', Express.static(dist));
 
 router.use((req, res, next) => {
 	if(req.get('User-Agent') === 'Twitterbot') {
