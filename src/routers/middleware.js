@@ -39,7 +39,8 @@ router.use(cors());
 router.use('/', Express.static(dist));
 
 router.use((req, res, next) => {
-	if(req.get('User-Agent') === 'Twitterbot') {
+	const userAgent = req.get('User-Agent');
+	if(userAgent.match(/^Twitterbot/)) {
 		const match = req.url.match(/^\/i\/(\w+)$/);
 		if(match === null) {
 			next();
