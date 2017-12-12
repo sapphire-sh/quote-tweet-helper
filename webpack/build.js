@@ -15,21 +15,17 @@ else {
 	clientConfig = clientDevConfig;
 }
 
-function getConfigs(target) {
+function getConfig(target) {
 	switch(target) {
 	case 'client':
-		return [
-			clientConfig,
-		];
+		if(process.env.NODE_ENV === 'prod') {
+			return clientProdConfig;
+		}
+		else {
+			return clientDevConfig;
+		}
 	case 'server':
-		return [
-			serverConfig,
-		];
-	default:
-		return [
-			clientConfig,
-			serverConfig,
-		];
+		return serverConfig;
 	}
 }
 
@@ -44,23 +40,23 @@ function getStats(stats) {
 	}
 }
 
-const configs = getConfigs(process.env.TARGET);
+const config = getConfig(process.env.TARGET);
 
-Promise.each(configs, (config) => {
-	return webpackAsync(config)
+if(config === undefined) {
+	console.log('build target is not set');
+}
+else {
+	webpackAsync(config)
 	.then((stats) => {
-		getStats(stats)
-		.forEach((stats) => {
-			process.stdout.write(`${stats.toString({
-				'colors': true,
-				'modules': true,
-				'children': false,
-				'chunks': false,
-				'chunkModules': false,
-			})}\n`);
-		});
+		process.stdout.write(`${stats.toString({
+			'colors': true,
+			'modules': true,
+			'children': false,
+			'chunks': false,
+			'chunkModules': false,
+		})}\n`);
+	})
+	.catch((err) => {
+		console.log(err);
 	});
-})
-.catch((err) => {
-	console.log(err);
-});
+}

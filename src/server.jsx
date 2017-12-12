@@ -2,7 +2,9 @@ import Express from 'express';
 
 import routers from './routers';
 
-const PORT = 8022;
+import {
+	PORT,
+} from './config';
 
 const app = Express();
 

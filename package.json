@@ -5,9 +5,9 @@
   "main": "./dist/app.js",
   "scripts": {
     "clean": "babel-node ./webpack/clean.js",
-    "build": "npm run clean && babel-node ./webpack/build.js",
-    "build-client": "cross-env TARGET=client npm run build",
-    "build-server": "cross-env TARGET=server npm run build",
+    "build": "npm run clean && npm run build-client && npm run build-server",
+    "build-client": "cross-env TARGET=client babel-node ./webpack/build.js",
+    "build-server": "cross-env TARGET=server babel-node ./webpack/build.js",
     "prestart": "cross-env NODE_ENV=prod npm run build",
     "start": "pm2 start ./app.json",
     "stop": "pm2 stop ./app.json",

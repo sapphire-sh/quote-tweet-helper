@@ -63,6 +63,7 @@ const config = {
 		new webpack.DefinePlugin({
 			'__DEV__': process.env.NODE_ENV === 'dev',
 			'__TEST__': process.env.NODE_ENV === 'test',
+			'__CLIENT__': process.env.TARGET === 'client',
 		}),
 		new ExtractTextPlugin('styles.css'),
 	],

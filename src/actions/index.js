@@ -1,5 +1,9 @@
 import 'isomorphic-fetch';
 
+import {
+	PORT,
+} from '../config';
+
 export const INVALIDATE_ENCRYPT_ID = 'INVALIDATE_ENCRYPT_ID';
 export const REQUEST_ENCRYPT_ID = 'REQUEST_ENCRYPT_ID';
 export const RECEIVE_ENCRYPT_ID = 'RECEIVE_ENCRYPT_ID';
@@ -77,7 +81,15 @@ function fetchDecryptId(id) {
 	return (dispatch) => {
 		dispatch(requestDecryptId());
 
-		return fetch(`http://localhost:8022/d/${id}`)
+		let url;
+		if(__CLIENT__) {
+			url = `/d/${id}`;
+		}
+		else {
+			url = `http://localhost:${PORT}/d/${id}`;
+		}
+
+		return fetch(url)
 		.then((data) => {
 			return data.json();
 		})

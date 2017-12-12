@@ -18,6 +18,10 @@ import {
 	dist,
 } from '../../webpack/config.base';
 
+import {
+	PORT,
+} from '../config';
+
 const router = Express.Router();
 
 /* istanbul ignore if */
@@ -44,7 +48,7 @@ router.use((req, res, next) => {
 			const decryptedId = decrypt(match[1]);
 			const id = decryptedId.split('-')[1];
 
-			fetch(`http://localhost:8022/t/${id}`)
+			fetch(`http://localhost:${PORT}/t/${id}`)
 			.then((data) => {
 				return data.json();
 			})
