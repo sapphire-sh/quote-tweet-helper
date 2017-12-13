@@ -2,7 +2,7 @@ import request from 'supertest';
 
 import server from '../src/server';
 
-jest.setTimeout(10000);
+jest.setTimeout(60000);
 
 describe('quote twitter helper', () => {
 	const tweetId = '782250634086977536';
@@ -69,6 +69,7 @@ describe('quote twitter helper', () => {
 				expect(res.body)
 				.toEqual({
 					'id': tweetId,
+					'creator': 'sapphire_dev',
 					'title': 'sapphire',
 					'description': '“https://t.co/Hvub1sC6fR\n인용 대상에게 알람이 가지 않는 인용 트윗을 할 수 있도록 도와주는 사이트를 만들었습니다.\n잘 활용해주세요.”',
 					'image': 'https://quote.sapphire.sh/image/https%3A%2F%2Fpbs.twimg.com%2Fmedia%2FCtscrb6UEAQs1xK.png%3Alarge',
@@ -84,7 +85,7 @@ describe('quote twitter helper', () => {
 			.get('/t/invalid')
 			.expect(200, (err, res) => {
 				expect(res.body)
-				.toEqual({});
+				.toEqual('title not found');
 
 				done();
 			});
