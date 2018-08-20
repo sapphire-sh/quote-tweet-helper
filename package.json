@@ -86,10 +86,10 @@
       "__DEV__": false,
       "__TEST__": true
     },
-    "mapCoverage": true,
     "moduleFileExtensions": [
       "js",
-      "jsx"
+	  "jsx",
+	  "json"
     ],
     "moduleDirectories": [
       "node_modules",

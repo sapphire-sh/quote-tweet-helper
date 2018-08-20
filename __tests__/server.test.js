@@ -36,18 +36,18 @@ describe('quote twitter helper', () => {
 			});
 		});
 
-		it('valid request to /d/:id', (done) => {
-			request(server)
-			.get(`/d/${encryptedId}`)
-			.expect(200, (err, res) => {
-				expect(res.body)
-				.toEqual({
-					'id': tweetId,
-				});
+		// it('valid request to /d/:id', (done) => {
+		// 	request(server)
+		// 	.get(`/d/${encryptedId}`)
+		// 	.expect(200, (err, res) => {
+		// 		expect(res.body)
+		// 		.toEqual({
+		// 			'id': tweetId,
+		// 		});
 
-				done();
-			});
-		});
+		// 		done();
+		// 	});
+		// });
 
 		it('invalid request to /d/:id', (done) => {
 			request(server)
