@@ -2,7 +2,7 @@ import path from 'path';
 
 import webpack from 'webpack';
 
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const dist = path.resolve(__dirname, '../dist');
 const src = path.resolve(__dirname, '../src');
@@ -18,14 +18,14 @@ const config = {
 			},
 			{
 				'test': /\.css$/,
-				'use': ExtractTextPlugin.extract({
-					'fallback': 'style-loader',
-					'use': [
-						{
-							'loader': 'css-loader',
-						},
-					],
-				}),
+				'use': [
+					{
+						'loader': MiniCssExtractPlugin.loader,
+					},
+					{
+						'loader': 'css-loader',
+					},
+				],
 			},
 			{
 				'test': /\.(png|jpe?g|svg)$/,
@@ -65,8 +65,11 @@ const config = {
 			'__TEST__': process.env.NODE_ENV === 'test',
 			'__CLIENT__': process.env.TARGET === 'client',
 		}),
-		new ExtractTextPlugin('styles.css'),
+		new MiniCssExtractPlugin({
+			'filename': 'styles.css',
+		}),
 	],
+	'mode': process.env.NODE_ENV === 'dev' ? 'development': 'production',
 };
 
 export default config;
