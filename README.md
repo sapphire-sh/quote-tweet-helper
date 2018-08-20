@@ -2,10 +2,9 @@
 
 [![Build Status](https://travis-ci.org/sapphiredev/quote-tweet-helper.svg?branch=master)](https://travis-ci.org/sapphiredev/quote-tweet-helper)
 [![Coverage Status](https://coveralls.io/repos/github/sapphiredev/quote-tweet-helper/badge.svg?branch=master)](https://coveralls.io/github/sapphiredev/quote-tweet-helper?branch=master)
-[![Dependency Status](https://gemnasium.com/badges/github.com/sapphiredev/quote-tweet-helper.svg)](https://gemnasium.com/github.com/sapphiredev/quote-tweet-helper)
 [![Maintainability](https://api.codeclimate.com/v1/badges/4799e7d0869031827cff/maintainability)](https://codeclimate.com/github/sapphiredev/quote-tweet-helper/maintainability)
 
-[https://quote.sapphire.sh/](https://quote.sapphire.sh/)
+~[https://quote.sapphire.sh/](https://quote.sapphire.sh/)~
 
 ## Install & Execute
 
